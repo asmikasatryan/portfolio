@@ -1,0 +1,17 @@
+/* Design tokens — mobile portfolio (Figma reference) */
+:root {
+  --color-bg: #f9f9f7;
+  --color-text: #1a2e1a;
+  --color-text-muted: #4a5c4a;
+  --color-accent: #2f4a32;
+  --color-sage: #9cb59c;
+  --color-sage-soft: #e8eee8;
+  --color-card: #f0f2ef;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --shadow-soft: 0 8px 24px rgba(26, 46, 26, 0.08);
+  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --section-space: 3.5rem;
+  --content-max: 420px;
+}

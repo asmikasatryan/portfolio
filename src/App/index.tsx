@@ -1,8 +1,8 @@
-import { Routes, Route } from 'react-router-dom'
-import { AppLayout } from './components/AppLayout'
-import { HomePage } from './pages/HomePage'
-import { ProjectsPage } from './pages/ProjectsPage'
-import { ContactPage } from './pages/ContactPage'
+import { Route, Routes } from 'react-router-dom'
+import { AppLayout } from '../components/AppLayout'
+import { ContactPage } from '../pages/ContactPage'
+import { HomePage } from '../pages/HomePage'
+import { ProjectsPage } from '../pages/ProjectsPage'
 
 export default function App() {
   return (

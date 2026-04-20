@@ -1,0 +1,16 @@
+---
+description: React and TypeScript conventions for src/
+globs: src/**/*.{ts,tsx}
+alwaysApply: false
+---
+
+# React / TypeScript in this repo
+
+- **Strict TypeScript** (`strict: true`). Do not add `eslint-disable` comments; fix the underlying issue.
+- **No inline `style={}`** on components. Use **`*.module.css`** per component (or shared global CSS in `src/index.css` when truly global).
+- **Component folders:** Each UI unit lives in `src/components/<Name>/` or `src/pages/<Name>/` with **`index.tsx`** as the entry. Colocate **`styles.module.css`**, **`consts.ts`**, **`types.ts`** (when needed), **`utils.ts` / `utils.tsx`** (when needed). Add files only when they carry real content.
+- **Marketing sections** (portfolio landing): `Hero`, `FeaturedProjects`, `TechnicalSkills`, `Experience`, `AboutMe`, `SiteFooter`, `SiteHeader` — composed on `HomePage`. Design tokens live in `src/styles/tokens.css`.
+- Use **function components** and explicit types; **named exports** for route-level pages (`HomePage`, etc.).
+- **Routing:** `react-router-dom` — routes in `src/App/index.tsx`, nested layout via `<Route element={<AppLayout />}>` and `<Outlet />`.
+- **UI:** Import from `antd` and `@ant-design/icons`. `ConfigProvider` lives in `main.tsx`.
+- **Links:** Use `<Link>` from `react-router-dom` for in-app navigation, not raw `<a href>` for internal routes.

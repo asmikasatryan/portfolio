@@ -1,0 +1,48 @@
+.section {
+  padding-bottom: var(--section-space);
+}
+
+.layout {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+@media (min-width: 480px) {
+  .layout {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 1.5rem;
+  }
+}
+
+.portrait {
+  flex-shrink: 0;
+  width: 100%;
+  max-width: 200px;
+  aspect-ratio: 3 / 4;
+  border-radius: var(--radius-md);
+  background: linear-gradient(160deg, #c5d4c5 0%, #5a7a5a 100%);
+  box-shadow: var(--shadow-soft);
+}
+
+.copy {
+  flex: 1;
+  min-width: 0;
+}
+
+.heading {
+  margin: 0 0 0.75rem;
+  font-family: var(--font-sans);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.body {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: var(--color-text-muted);
+}

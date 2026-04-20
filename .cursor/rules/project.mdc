@@ -1,0 +1,25 @@
+---
+description: Portfolio app stack, pnpm, and agent defaults
+alwaysApply: true
+---
+
+# Portfolio project
+
+## Stack
+
+- React 19, TypeScript, Vite, **Ant Design**, **react-router-dom**
+- Routes in `src/App/index.tsx`; pages under `src/pages/<PageName>/`; shared shell under `src/components/AppLayout/` (see Cursor rule for folder/file conventions).
+
+## Package manager: pnpm
+
+- This repo uses **pnpm** (`pnpm-lock.yaml` is source of truth). Version is pinned in `package.json` as `packageManager`.
+- Prefer: `pnpm install`, `pnpm dev`, `pnpm build`, `pnpm lint`
+- If `pnpm` is not on PATH (common on Windows):
+  - **Option A:** Run **PowerShell as Administrator** once: `corepack enable`, then reopen the terminal and use `pnpm` normally.
+  - **Option B (no admin):** `npx pnpm@10.33.0 install` and same pattern for other commands (or any matching `packageManager` version).
+- `npm run dev` / `npm run build` still work because they call the same scripts; for lockfile consistency, install dependencies with pnpm when possible.
+
+## Edits
+
+- Match existing patterns (Ant Design layout, functional components, TypeScript types).
+- Avoid unrelated refactors and unsolicited new markdown files.

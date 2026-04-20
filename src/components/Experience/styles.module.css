@@ -1,0 +1,52 @@
+.section {
+  padding-bottom: var(--section-space);
+}
+
+.heading {
+  margin: 0 0 1.25rem;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.block {
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(26, 46, 26, 0.1);
+}
+
+.block:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.role {
+  margin: 0 0 0.35rem;
+  font-family: var(--font-sans);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.meta {
+  margin: 0 0 0.65rem;
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
+
+.summary {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--color-text);
+}
