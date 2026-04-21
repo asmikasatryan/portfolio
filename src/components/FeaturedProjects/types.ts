@@ -1,5 +1,7 @@
 export type FeaturedProject = {
   id: string
   title: string
-  category: string
+  description: string
+  tags: string[]
+  ctaLabel: string
 }
