@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "hooks": {
+    "afterFileEdit": [
+      {
+        "command": "powershell -NoProfile -ExecutionPolicy Bypass -File .cursor/hooks/auto-sync-deploy.ps1",
+        "timeout": 180
+      }
+    ],
+    "afterTabFileEdit": [
+      {
+        "command": "powershell -NoProfile -ExecutionPolicy Bypass -File .cursor/hooks/auto-sync-deploy.ps1",
+        "timeout": 180
+      }
+    ]
+  }
+}

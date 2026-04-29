@@ -1,0 +1,11 @@
+---
+description: Auto-sync changes to GitHub and rely on Vercel auto-deploy.
+alwaysApply: true
+---
+
+# Auto Sync Deploy Rule
+
+- Keep `.cursor/hooks.json` pointing to `.cursor/hooks/auto-sync-deploy.ps1`.
+- Preserve commit/push workflow: stage all, commit with timestamp, push to `origin`.
+- Prefer Vercel deployment via GitHub integration; use `vercel --prod` only as fallback.
+- Skip empty commits and never block successful GitHub push just because Vercel link is missing.
