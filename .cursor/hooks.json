@@ -3,13 +3,13 @@
   "hooks": {
     "afterFileEdit": [
       {
-        "command": "powershell -NoProfile -ExecutionPolicy Bypass -File .cursor/hooks/auto-sync-deploy.ps1",
+        "command": "powershell -NoProfile -ExecutionPolicy Bypass -File .cursor/hooks/confirm-sync-deploy.ps1",
         "timeout": 180
       }
     ],
     "afterTabFileEdit": [
       {
-        "command": "powershell -NoProfile -ExecutionPolicy Bypass -File .cursor/hooks/auto-sync-deploy.ps1",
+        "command": "powershell -NoProfile -ExecutionPolicy Bypass -File .cursor/hooks/confirm-sync-deploy.ps1",
         "timeout": 180
       }
     ]

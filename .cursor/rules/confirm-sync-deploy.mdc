@@ -1,0 +1,23 @@
+---
+description: Confirm before syncing to GitHub or deploying to Vercel—hook and assistant must ask first.
+alwaysApply: true
+---
+
+# Confirm Sync Deploy Rule
+
+## Hook script (`.cursor/hooks/confirm-sync-deploy.ps1`)
+
+- Keep `.cursor/hooks.json` pointing to `.cursor/hooks/confirm-sync-deploy.ps1`.
+- Before **any** stage/commit/**push to GitHub** or **Vercel-related** steps, the script must prompt (nothing runs until then): `Proceed with GitHub sync and Vercel deploy? (yes/no)`.
+- If the answer is `no`, abort (no stage/commit/push/deploy).
+- If the answer is `yes`, continue: stage all, commit with timestamp, push to `origin`, then deployment logic.
+- Prefer Vercel deployment via GitHub integration; use `vercel --prod` only as fallback.
+- Skip empty commits and never block successful GitHub push just because Vercel link is missing.
+
+## Assistant (you)
+
+- **After** finishing substantive edits or before you would push or deploy: you **must** ask the user about **both** **GitHub** (commit/push/sync to `origin`) **and** **Vercel-related** steps (production deploy, `vercel` CLI, expecting deploy after push). Do not run those steps silently.
+- Do **not** run `git push`, `git push origin`, or Vercel deploy commands (`vercel`, `vercel --prod`, deploy scripts) unless the user has **explicitly agreed** on GitHub sync **and** Vercel deployment (same intent as the hook).
+- Ask first with: `Proceed with GitHub sync and Vercel deploy? (yes/no)` — or accept an explicit instruction such as “yes, push and deploy” — then proceed only if yes.
+- If the user says no to deploy but yes to GitHub (or the opposite), honor that; only push or only discuss Vercel if they specify. If unclear, ask again before GitHub- or Vercel-related commands.
+- Terminal git/deploy commands **do not** trigger the save hook; asking in chat is required when you would otherwise push or deploy yourself.

@@ -28,7 +28,7 @@ function Get-RepoNameFromUrl {
     return $clean
 }
 
-Write-Host "=== auto-sync-deploy ==="
+Write-Host "=== confirm-sync-deploy ==="
 
 # Preconditions
 $insideRepo = Invoke-Git -Args @("rev-parse", "--is-inside-work-tree")
@@ -67,6 +67,19 @@ if ([string]::IsNullOrWhiteSpace($statusResult.Output)) {
     exit 0
 }
 
+# Confirm before GitHub push / Vercel-related steps (nothing staged or committed yet)
+while ($true) {
+    $response = (Read-Host "Proceed with GitHub sync and Vercel deploy? (yes/no)").Trim().ToLowerInvariant()
+    if ($response -eq "yes") {
+        break
+    }
+    if ($response -eq "no") {
+        Write-Host "Aborted: GitHub sync and deployment cancelled."
+        exit 0
+    }
+    Write-Host "Please answer 'yes' or 'no'."
+}
+
 # 2) Stage all files
 $addResult = Invoke-Git -Args @("add", ".")
 if ($addResult.ExitCode -ne 0) {
@@ -77,7 +90,7 @@ if ($addResult.ExitCode -ne 0) {
 
 # 3) Commit changes
 $timestamp = Get-Date -Format "yyyy-MM-dd_HH-mm-ss"
-$message = "chore(auto): update $timestamp"
+$message = "chore(confirm): update $timestamp"
 $commitResult = Invoke-Git -Args @("commit", "-m", $message)
 if ($commitResult.ExitCode -ne 0) {
     if ($commitResult.Output -match "nothing to commit") {
