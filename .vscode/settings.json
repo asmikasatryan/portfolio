@@ -1,0 +1,10 @@
+{
+  "emeraldwalk.runonsave": {
+    "commands": [
+      {
+        "match": ".*",
+        "cmd": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \"${workspaceFolder}/.cursor/hooks/confirm-sync-deploy.ps1\" -TriggerPath \"${file}\""
+      }
+    ]
+  }
+}

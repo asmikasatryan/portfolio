@@ -8,7 +8,8 @@ alwaysApply: true
 ## Hook script (`.cursor/hooks/confirm-sync-deploy.ps1`)
 
 - Keep `.cursor/hooks.json` pointing to `.cursor/hooks/confirm-sync-deploy.ps1`.
-- Before **any** stage/commit/**push to GitHub** or **Vercel-related** steps, the script must prompt (nothing runs until then): `Proceed with GitHub sync and Vercel deploy? (yes/no)`.
+- If the save/hook trigger is a **`.env` or secret/sensitive file** (see script rules: `.env*`, `secrets` path segments, filenames containing `secret` except common `.ts`/`.tsx`/`.js`/`.jsx` code files), **do not** prompt and **do not** sync—exit immediately.
+- Before **any** stage/commit/**push to GitHub** or **Vercel-related** steps for other files, the script must prompt (nothing runs until then): `Proceed with GitHub sync and Vercel deploy? (yes/no)`.
 - If the answer is `no`, abort (no stage/commit/push/deploy).
 - If the answer is `yes`, continue: stage all, commit with timestamp, push to `origin`, then deployment logic.
 - Prefer Vercel deployment via GitHub integration; use `vercel --prod` only as fallback.

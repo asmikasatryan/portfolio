@@ -1,0 +1,36 @@
+---
+description: On GitHub token expiry—validate expiry, revoke or treat as invalid, and notify to regenerate.
+alwaysApply: false
+---
+
+# GitHub Token Expiry Rule
+
+Ensure GitHub tokens stay valid; when they expire, revoke usage and prompt regeneration.
+
+## Trigger: `onTokenExpiry`
+
+Apply this rule when:
+
+- The user reports an expired or invalid GitHub token, or
+- GitHub API / MCP / git operations fail with auth or token errors that indicate expiry, or
+- You are comparing `token.expiryDate` (or equivalent metadata) to the current date and it is in the past.
+
+## Steps
+
+1. **Check** `token.expiryDate` (or the token’s documented expiry). If missing, treat unknown long-lived tokens as suspect when auth fails repeatedly.
+
+2. **Action — `revokeToken`**: Stop using the expired token. In practice:
+   - Do not paste or reuse the old token in fixes.
+   - Prefer revoking the credential in GitHub (**Settings → Developer settings → Personal access tokens**, or the relevant OAuth/app settings) if the user still controls it, so a leaked copy cannot be abused.
+   - Remove or update stored references (env vars, MCP config, credential helpers) after the user supplies a new token.
+
+3. **Notify** (required message):
+
+   > Token expired. Please generate a new one.
+
+   Optionally add one line on where to create a PAT or reconnect OAuth, without substituting for the exact sentence above.
+
+## Principles
+
+- Never assume a rotated token without the user providing or confirming the new secret.
+- After expiry, guide the user to generate a new token and wire it into the same places the old one lived (document paths only when they exist in the repo).

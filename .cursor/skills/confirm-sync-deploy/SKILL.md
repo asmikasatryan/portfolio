@@ -8,7 +8,15 @@ description: After Cursor-driven file edits, ask before staging, commit, push to
 ## Trigger
 
 - Via project hooks on `afterFileEdit` and `afterTabFileEdit`.
-- This tracks Cursor-driven edits/saves (not a generic VS Code manual Save All event).
+- Optional **manual save**: workspace `.vscode/settings.json` uses **Run on Save** (`emeraldwalk.runonsave`, listed in `.vscode/extensions.json`). Install the recommended extension so the same script runs on save with `-TriggerPath` set to the saved file.
+
+## Skipped paths (no prompt, no sync)
+
+The hook/script exits early when the edited/saved file is treated as env or secret-related:
+
+- `.env`, `.env.*`, or basename ending in `.env`
+- Path contains a `secrets` or `secret` directory segment
+- Basename contains `secret`, except typical source extensions (`.ts`, `.tsx`, `.js`, `.jsx`, `.mjs`, `.cjs`) to avoid false positives on component names
 
 ## Preconditions
 

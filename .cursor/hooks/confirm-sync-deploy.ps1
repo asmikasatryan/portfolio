@@ -1,4 +1,44 @@
+param(
+    [Parameter(Mandatory = $false)]
+    [string]$TriggerPath = ""
+)
+
 $ErrorActionPreference = "Stop"
+
+function Test-IsExcludedSensitivePath {
+    param(
+        [Parameter(Mandatory = $false)]
+        [string]$FullPath
+    )
+
+    if ([string]::IsNullOrWhiteSpace($FullPath)) {
+        return $false
+    }
+
+    $name = Split-Path -Leaf $FullPath
+    if ([string]::IsNullOrWhiteSpace($name)) {
+        return $false
+    }
+
+    $lowerName = $name.ToLowerInvariant()
+    $norm = $FullPath.Replace('/', '\').ToLowerInvariant()
+
+    if ($lowerName -eq '.env') { return $true }
+    if ($lowerName.StartsWith('.env.')) { return $true }
+    if ($lowerName.EndsWith('.env')) { return $true }
+
+    if ($norm -match '[\\/]secrets?[\\/]') { return $true }
+    if ($norm -match '[\\/]\.env($|\\)') { return $true }
+
+    if ($lowerName.Contains('secret')) {
+        if ($lowerName -match '\.(ts|tsx|js|jsx|mjs|cjs)$') {
+            return $false
+        }
+        return $true
+    }
+
+    return $false
+}
 
 function Invoke-Git {
     param(
@@ -26,6 +66,38 @@ function Get-RepoNameFromUrl {
     $clean = $clean -replace "git@github\.com:", "https://github.com/"
 
     return $clean
+}
+
+$resolvedTriggerPath = ""
+if (-not [string]::IsNullOrWhiteSpace($TriggerPath)) {
+    $resolvedTriggerPath = $TriggerPath.Trim()
+} elseif ($args.Count -gt 0 -and -not [string]::IsNullOrWhiteSpace($args[0])) {
+    $resolvedTriggerPath = $args[0].Trim()
+} else {
+    $stdinText = ""
+    if ([Console]::IsInputRedirected) {
+        try {
+            $stdinText = [Console]::In.ReadToEnd()
+        } catch {
+            $stdinText = ""
+        }
+    }
+    if (-not [string]::IsNullOrWhiteSpace($stdinText)) {
+        try {
+            $json = $stdinText | ConvertFrom-Json
+            if ($null -ne $json.file_path) {
+                $resolvedTriggerPath = [string]$json.file_path
+            }
+        } catch {
+            $resolvedTriggerPath = ""
+        }
+    }
+}
+
+if (Test-IsExcludedSensitivePath -FullPath $resolvedTriggerPath) {
+    Write-Host "=== confirm-sync-deploy ==="
+    Write-Host "Skipped: trigger path is .env or a secret/sensitive file (no prompt, no sync)."
+    exit 0
 }
 
 Write-Host "=== confirm-sync-deploy ==="
