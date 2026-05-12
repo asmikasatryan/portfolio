@@ -2,11 +2,8 @@
   position: relative;
   width: 100vw;
   margin-left: calc(50% - 50vw);
-  padding: 5rem 1.25rem 3.25rem;
-  background:
-    radial-gradient(circle at 38% 22%, rgba(190, 214, 164, 0.42), transparent 36%),
-    radial-gradient(circle at 72% 30%, rgba(144, 169, 123, 0.28), transparent 30%),
-    linear-gradient(180deg, #f7f8f3 0%, #eef2e8 50%, #e9efe1 100%);
+  padding: 5rem 1.5rem 3.25rem;
+  background: #f1f3ed;
   overflow: hidden;
 }
 
@@ -30,12 +27,10 @@
   width: 30rem;
   height: 30rem;
   border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    rgba(141, 169, 120, 0.28) 0%,
-    rgba(141, 169, 120, 0.07) 58%,
-    transparent 75%
-  );
+  background: radial-gradient(circle,
+      rgba(141, 169, 120, 0.28) 0%,
+      rgba(141, 169, 120, 0.07) 58%,
+      transparent 75%);
   filter: blur(10px);
 }
 
@@ -68,7 +63,8 @@
   font-weight: 700;
   line-height: 1;
   letter-spacing: -0.02em;
-  color: rgba(88, 110, 79, 0.14);
+  color: #4f6a46;
+  /* color: rgba(88, 110, 79, 0.14); */
 }
 
 .title {
@@ -134,7 +130,7 @@
 
 .visualWrap {
   position: relative;
-  width: min(100%, 26rem);
+  width: min(100%, 30rem);
   align-self: center;
 }
 
@@ -149,12 +145,12 @@
 
 @media (min-width: 640px) {
   .hero {
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
   }
 
   .visualWrap {
-    width: min(100%, 30rem);
+    width: min(100%, 34rem);
   }
 }
 
@@ -167,11 +163,12 @@
   .row {
     flex-direction: row;
     align-items: center;
-    gap: 2rem;
+    width: 100%;
+    gap: clamp(3rem, 6vw, 6rem);
   }
 
   .copy {
-    flex: 1 1 auto;
+    flex: 1 1 46%;
     padding-bottom: 0.5rem;
   }
 
@@ -184,17 +181,19 @@
   }
 
   .visualWrap {
-    width: clamp(27rem, 39vw, 32rem);
+    width: clamp(36rem, 52vw, 45rem);
     margin-left: auto;
-    align-self: flex-end;
+    align-self: flex-start;
+    flex: 0 1 48%;
     flex-shrink: 0;
+    transform: translateY(2.2rem);
   }
 }
 
 @media (min-width: 1280px) {
   .hero {
-    padding-left: 2rem;
-    padding-right: 2rem;
+    padding-left: 2.6rem;
+    padding-right: 2.6rem;
     min-height: 44rem;
   }
 
@@ -214,5 +213,10 @@
     font-size: 1.65rem;
     padding-left: 1.8rem;
     padding-right: 1.8rem;
+  }
+
+  .visualWrap {
+    width: clamp(40rem, 56vw, 50rem);
+    transform: translateY(3rem);
   }
 }
