@@ -21,6 +21,8 @@ const { Title, Paragraph, Text } = Typography
 const DEFAULT_SOURCE_URL =
   'https://create-images-results.d-id.com/DefaultPresenters/Emma_f/image.jpeg'
 
+const DEFAULT_PREVIEW_VIDEO = '/1778591615619.mp4'
+
 export function HomePage() {
   const [prompt, setPrompt] = useState('')
   const [answer, setAnswer] = useState('')
@@ -186,6 +188,16 @@ export function HomePage() {
               </Form.Item>
             </Form>
             <div className={styles.answerBox}>
+              {videoError ? (
+                <Text type="danger" className={styles.videoMessage}>
+                  {videoError}
+                </Text>
+              ) : null}
+              {videoStatus && !videoUrl ? (
+                <Text type="secondary" className={styles.videoMessage}>
+                  {videoStatus}
+                </Text>
+              ) : null}
               {videoUrl ? (
                 <video
                   className={styles.videoPlayer}
@@ -193,12 +205,17 @@ export function HomePage() {
                   controls
                   autoPlay
                 />
-              ) : videoError ? (
-                <Text type="danger">{videoError}</Text>
-              ) : videoStatus ? (
-                <Text type="secondary">{videoStatus}</Text>
               ) : (
-                'Generated video will appear here.'
+                <video
+                  className={styles.videoPlayer}
+                  src={DEFAULT_PREVIEW_VIDEO}
+                  controls
+                  muted
+                  loop
+                  playsInline
+                  preload="metadata"
+                  autoPlay
+                />
               )}
             </div>
           </div>

@@ -31,8 +31,15 @@
 
 .videoPlayer {
   width: 100%;
+  min-height: 200px;
+  aspect-ratio: 16 / 9;
   border-radius: 0.5rem;
   background: #000;
+}
+
+.videoMessage {
+  display: block;
+  margin-bottom: 0.75rem;
 }
 
 .geminiIntro {
