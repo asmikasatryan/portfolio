@@ -31,11 +31,8 @@
   width: 100%;
   height: 100%;
   border-radius: 1.6rem;
-  background:
-    radial-gradient(circle at 58% 18%, rgba(241, 223, 204, 0.8), transparent 22%),
-    radial-gradient(circle at 52% 38%, rgba(177, 135, 104, 0.62), transparent 29%),
-    radial-gradient(circle at 54% 80%, rgba(60, 92, 130, 0.82), transparent 35%),
-    linear-gradient(160deg, #afb8bc 0%, #768590 100%);
+  object-fit: cover;
+  display: block;
   box-shadow: 0 22px 36px rgba(0, 0, 0, 0.38);
 }
 

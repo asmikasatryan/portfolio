@@ -10,10 +10,10 @@ export function AboutMe() {
     >
       <div className={styles.layout}>
         <div className={styles.portraitFrame}>
-          <div
+          <img
             className={styles.portrait}
-            role="img"
-            aria-label="Portrait of the maker"
+            src="/1149de5674f43bdd39aae15d3c8370ed36dfd05e37cd8975c60bd0a3c63e903f.png"
+            alt="Portrait of the maker"
           />
         </div>
         <div className={styles.copy}>
