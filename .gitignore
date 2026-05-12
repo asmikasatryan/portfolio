@@ -39,9 +39,5 @@ vite.config.ts.timestamp-*
 # Custom scripts
 commit-and-push.ps1
 
-# Custom scripts
-commit-and-push.ps1
-
-# Custom scripts
-commit-and-push.ps1
+# Vercel
 .vercel
