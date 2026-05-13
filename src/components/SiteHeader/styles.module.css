@@ -13,7 +13,6 @@
   padding: 0 1.25rem;
   display: flex;
   align-items: center;
-  justify-content: space-between;
   gap: 1rem;
   box-sizing: border-box;
 }
@@ -28,6 +27,32 @@
   letter-spacing: -0.01em;
   color: var(--color-text);
   text-decoration: none;
+}
+
+.rightCluster {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
+.headerAvatar {
+  display: block;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  object-fit: cover;
+  aspect-ratio: 1 / 1;
+  border: 3px solid rgba(255, 255, 255, 0.95);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+}
+
+@media (min-width: 1024px) {
+  .headerAvatar {
+    width: 4.5rem;
+    height: 4.5rem;
+  }
 }
 
 .menuButton {
@@ -50,6 +75,10 @@
 
 .desktopNav {
   display: none;
+  flex: 1;
+  min-width: 0;
+  align-items: center;
+  justify-content: center;
 }
 
 .desktopList {
@@ -160,9 +189,11 @@
   }
 
   .desktopNav {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+    display: flex;
+    flex: 1;
+    min-width: 0;
+    align-items: center;
+    justify-content: center;
   }
 
   .contactButton {

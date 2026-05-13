@@ -1,11 +1,13 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import axios from 'axios'
+import { PlayCircleOutlined } from '@ant-design/icons'
 import { Button, Form, Input, Typography } from 'antd'
 import ReactMarkdown from 'react-markdown'
 import { AboutMe } from '../../components/AboutMe'
 import { Experience } from '../../components/Experience'
 import { FeaturedProjects } from '../../components/FeaturedProjects'
 import { Hero } from '../../components/Hero'
+import { HEADER_AVATAR_SRC } from '../../components/SiteHeader/consts'
 import { SiteFooter } from '../../components/SiteFooter'
 import { TechnicalSkills } from '../../components/TechnicalSkills'
 import { askGemini } from '../../services/geminiApi'
@@ -21,7 +23,62 @@ const { Title, Paragraph, Text } = Typography
 const DEFAULT_SOURCE_URL =
   'https://create-images-results.d-id.com/DefaultPresenters/Emma_f/image.jpeg'
 
-const DEFAULT_PREVIEW_VIDEO = '/1778591615619.mp4'
+/** Local fallback video shipped in public/, used when no generated clip exists. */
+const FALLBACK_VIDEO_SRC = '/1778610328275.mp4'
+
+const GENERATED_VIDEO_STORAGE_KEY = 'home:generatedVideo'
+
+type GeneratedVideoSaved = {
+  videoUrl: string
+  posterUrl: string
+  scriptUsed?: string
+  createdAt: number
+}
+
+function readSavedGeneratedVideo(): GeneratedVideoSaved | null {
+  if (typeof window === 'undefined') {
+    return null
+  }
+  try {
+    const raw = window.localStorage.getItem(GENERATED_VIDEO_STORAGE_KEY)
+    if (!raw) {
+      return null
+    }
+    const parsed = JSON.parse(raw) as Partial<GeneratedVideoSaved>
+    if (parsed && typeof parsed.videoUrl === 'string' && parsed.videoUrl) {
+      return {
+        videoUrl: parsed.videoUrl,
+        posterUrl:
+          typeof parsed.posterUrl === 'string' ? parsed.posterUrl : '',
+        scriptUsed:
+          typeof parsed.scriptUsed === 'string' ? parsed.scriptUsed : undefined,
+        createdAt:
+          typeof parsed.createdAt === 'number' ? parsed.createdAt : Date.now(),
+      }
+    }
+  } catch {
+    /* ignore */
+  }
+  return null
+}
+
+function persistGeneratedVideo(payload: GeneratedVideoSaved | null): void {
+  if (typeof window === 'undefined') {
+    return
+  }
+  try {
+    if (payload === null) {
+      window.localStorage.removeItem(GENERATED_VIDEO_STORAGE_KEY)
+    } else {
+      window.localStorage.setItem(
+        GENERATED_VIDEO_STORAGE_KEY,
+        JSON.stringify(payload),
+      )
+    }
+  } catch {
+    /* ignore quota / storage errors */
+  }
+}
 
 export function HomePage() {
   const [prompt, setPrompt] = useState('')
@@ -30,10 +87,28 @@ export function HomePage() {
 
   const [sourceUrl, setSourceUrl] = useState(DEFAULT_SOURCE_URL)
   const [script, setScript] = useState('Hello! Welcome to my portfolio.')
-  const [videoUrl, setVideoUrl] = useState('')
+  const initialSaved = readSavedGeneratedVideo()
+  const [outputVideoUrl, setOutputVideoUrl] = useState(
+    initialSaved?.videoUrl ?? '',
+  )
+  const [outputPosterUrl, setOutputPosterUrl] = useState(
+    initialSaved?.posterUrl ?? '',
+  )
+  const [videoPlayerActive, setVideoPlayerActive] = useState(false)
   const [videoStatus, setVideoStatus] = useState('')
   const [videoError, setVideoError] = useState('')
   const [isVideoLoading, setIsVideoLoading] = useState(false)
+
+  const outputVideoRef = useRef<HTMLVideoElement>(null)
+  const showcaseRef = useRef<HTMLElement>(null)
+
+  useEffect(() => {
+    if (videoPlayerActive && outputVideoRef.current) {
+      void outputVideoRef.current.play().catch(() => {
+        /* user gesture may be required on some browsers */
+      })
+    }
+  }, [videoPlayerActive])
 
   const handleClear = () => {
     setPrompt('')
@@ -85,12 +160,16 @@ export function HomePage() {
 
     setIsVideoLoading(true)
     setVideoError('')
-    setVideoUrl('')
+    setOutputVideoUrl('')
+    setOutputPosterUrl('')
+    setVideoPlayerActive(false)
     setVideoStatus('Sending request...')
+
+    const posterForThisRun = sourceUrl.trim()
 
     try {
       const created = await createTalk({
-        source_url: sourceUrl.trim(),
+        source_url: posterForThisRun,
         script: { type: 'text', input: script.trim() },
       })
       setVideoStatus(`Job ${created.id} ${created.status}. Polling...`)
@@ -109,8 +188,17 @@ export function HomePage() {
         return
       }
 
-      setVideoUrl(finished.result_url)
-      setVideoStatus('Done.')
+      setOutputVideoUrl(finished.result_url)
+      setOutputPosterUrl(posterForThisRun)
+      setVideoPlayerActive(false)
+      setVideoStatus('Done. Scroll down to preview and play your clip.')
+      persistGeneratedVideo({
+        videoUrl: finished.result_url,
+        posterUrl: posterForThisRun,
+        scriptUsed: script.trim(),
+        createdAt: Date.now(),
+      })
+      showcaseRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
     } catch (error) {
       setVideoStatus('')
       if (axios.isAxiosError(error)) {
@@ -154,8 +242,8 @@ export function HomePage() {
           <div id="video" className={styles.geminiCard}>
             <Title level={3}>Generate Video</Title>
             <Paragraph type="secondary" className={styles.geminiIntro}>
-              Powered by D-ID. Provide a public portrait image URL and a short
-              script.
+              Powered by D-ID (POST /talks, then GET until done). The clip appears
+              below the avatar — tap the poster to play.
             </Paragraph>
             <Form layout="vertical" onFinish={handleGenerateVideo}>
               <Form.Item label="Source Image URL">
@@ -187,36 +275,22 @@ export function HomePage() {
                 </Button>
               </Form.Item>
             </Form>
-            <div className={styles.answerBox}>
+            <div className={styles.videoGenStatusBox}>
               {videoError ? (
                 <Text type="danger" className={styles.videoMessage}>
                   {videoError}
                 </Text>
               ) : null}
-              {videoStatus && !videoUrl ? (
+              {videoStatus ? (
                 <Text type="secondary" className={styles.videoMessage}>
                   {videoStatus}
                 </Text>
               ) : null}
-              {videoUrl ? (
-                <video
-                  className={styles.videoPlayer}
-                  src={videoUrl}
-                  controls
-                  autoPlay
-                />
-              ) : (
-                <video
-                  className={styles.videoPlayer}
-                  src={DEFAULT_PREVIEW_VIDEO}
-                  controls
-                  muted
-                  loop
-                  playsInline
-                  preload="metadata"
-                  autoPlay
-                />
-              )}
+              {!videoError && !videoStatus ? (
+                <Text type="secondary">
+                  Status messages from D-ID will appear here while generating.
+                </Text>
+              ) : null}
             </div>
           </div>
           <div className={styles.geminiCard}>
@@ -261,6 +335,81 @@ export function HomePage() {
           </div>
         </div>
       </section>
+
+      <section
+        ref={showcaseRef}
+        id="generated-video"
+        className={styles.videoShowcase}
+        aria-labelledby="generated-video-heading"
+      >
+        <div className={styles.videoShowcaseInner}>
+          <h2 id="generated-video-heading" className={styles.videoShowcaseTitle}>
+            Your clip
+          </h2>
+          <div className={styles.showcasePlayerWrap}>
+            {outputVideoUrl ? (
+              videoPlayerActive ? (
+                <video
+                  ref={outputVideoRef}
+                  className={styles.videoPlayer}
+                  src={outputVideoUrl}
+                  controls
+                  playsInline
+                />
+              ) : (
+                <button
+                  type="button"
+                  className={styles.posterTrigger}
+                  onClick={() => {
+                    setVideoPlayerActive(true)
+                  }}
+                  aria-label="Play generated video"
+                >
+                  <img
+                    className={styles.posterImg}
+                    src={outputPosterUrl || HEADER_AVATAR_SRC}
+                    alt=""
+                  />
+                  <span className={styles.playOverlay} aria-hidden>
+                    <PlayCircleOutlined />
+                  </span>
+                </button>
+              )
+            ) : (
+              <video
+                className={styles.videoPlayer}
+                src={FALLBACK_VIDEO_SRC}
+                poster={HEADER_AVATAR_SRC}
+                controls
+                playsInline
+                preload="metadata"
+              />
+            )}
+            {outputVideoUrl ? (
+              <div className={styles.showcaseControls}>
+                <Button
+                  size="small"
+                  type="text"
+                  onClick={() => {
+                    setOutputVideoUrl('')
+                    setOutputPosterUrl('')
+                    setVideoPlayerActive(false)
+                    persistGeneratedVideo(null)
+                  }}
+                >
+                  Clear saved clip
+                </Button>
+              </div>
+            ) : (
+              <p className={styles.showcaseHint}>
+                Playing the bundled sample clip. Generate a video above to
+                replace it.
+              </p>
+            )}
+          </div>
+        </div>
+      </section>
+
       <SiteFooter />
     </div>
   )

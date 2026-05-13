@@ -5,6 +5,7 @@ import { MenuOutlined } from '@ant-design/icons'
 import {
   BRAND_LABEL,
   DEFAULT_ACTIVE_LINK_ID,
+  HEADER_AVATAR_SRC,
   MOBILE_LINKS,
   NAV_LINKS,
 } from './consts'
@@ -42,21 +43,30 @@ export function SiteHeader() {
             })}
           </ul>
         </nav>
-        <Link className={styles.contactButton} to="/contact">
-          Contact
-        </Link>
-        <button
-          type="button"
-          className={styles.menuButton}
-          aria-label="Open menu"
-          aria-expanded={open}
-          aria-controls="site-nav-drawer"
-          onClick={() => {
-            setOpen(true)
-          }}
-        >
-          <MenuOutlined />
-        </button>
+        <div className={styles.rightCluster}>
+          <Link className={styles.contactButton} to="/contact">
+            Contact
+          </Link>
+          <img
+            className={styles.headerAvatar}
+            src={HEADER_AVATAR_SRC}
+            alt=""
+            width={64}
+            height={64}
+          />
+          <button
+            type="button"
+            className={styles.menuButton}
+            aria-label="Open menu"
+            aria-expanded={open}
+            aria-controls="site-nav-drawer"
+            onClick={() => {
+              setOpen(true)
+            }}
+          >
+            <MenuOutlined />
+          </button>
+        </div>
       </div>
       <Drawer
         id="site-nav-drawer"

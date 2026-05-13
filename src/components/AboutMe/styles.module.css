@@ -19,17 +19,29 @@
 }
 
 .portraitFrame {
+  position: relative;
   width: min(100%, 25.5rem);
   aspect-ratio: 4 / 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.portraitFrame::before {
+  content: '';
+  position: absolute;
+  inset: 0;
   border-radius: 1.9rem;
   background: #d6edbf;
-  padding: 0.75rem;
-  transform: rotate(-3deg);
+  transform: rotate(-7deg);
+  z-index: 0;
 }
 
 .portrait {
-  width: 100%;
-  height: 100%;
+  position: relative;
+  z-index: 1;
+  width: calc(100% - 3rem);
+  height: calc(100% - 3rem);
   border-radius: 1.6rem;
   object-fit: cover;
   display: block;
@@ -57,7 +69,7 @@
   font-size: clamp(1rem, 1.3vw, 1.78rem);
   line-height: 1.48;
   color: rgba(41, 56, 43, 0.78);
-  max-width: 54rem;
+  max-width: none;
 }
 
 .body:last-of-type {

@@ -3,20 +3,22 @@
 }
 
 .geminiSection {
-  padding: 2rem 1.25rem 1rem;
-  /* background: #eceee7; */
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  padding: 2rem clamp(0.75rem, 2vw, 2rem) 1rem;
 }
 
 .geminiGrid {
-  max-width: 1200px;
-  margin: 0 auto;
+  width: 100%;
+  max-width: none;
+  margin: 0;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1.5rem;
+  gap: clamp(0.75rem, 1.6vw, 1.8rem);
   align-items: start;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1024px) {
   .geminiGrid {
     grid-template-columns: 1fr;
   }
@@ -27,6 +29,99 @@
   border: 1px solid rgba(26, 46, 26, 0.1);
   border-radius: 1rem;
   background: #ffffff;
+}
+
+.videoGenStatusBox {
+  margin-top: 1rem;
+  min-height: 4.5rem;
+  padding: 0.9rem 1rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(26, 46, 26, 0.14);
+  background: #f7faf7;
+}
+
+.videoShowcase {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  padding: 3rem clamp(0.75rem, 2vw, 2rem) 2.5rem;
+  background: #eceee7;
+}
+
+.videoShowcaseInner {
+  max-width: 42rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.videoShowcaseTitle {
+  margin: 0 0 1.25rem;
+  font-size: clamp(1.35rem, 2.5vw, 1.75rem);
+  font-weight: 700;
+  color: rgba(34, 47, 36, 0.88);
+}
+
+.showcasePlayerWrap {
+  text-align: left;
+}
+
+.showcasePlaceholder {
+  margin: 0 !important;
+  text-align: center;
+}
+
+.posterTrigger {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  background: #111;
+  line-height: 0;
+}
+
+.posterTrigger:focus-visible {
+  outline: 2px solid rgba(26, 46, 26, 0.55);
+  outline-offset: 3px;
+}
+
+.posterImg {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  display: block;
+}
+
+.playOverlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(3rem, 8vw, 4.5rem);
+  color: rgba(255, 255, 255, 0.92);
+  background: rgba(0, 0, 0, 0.28);
+  pointer-events: none;
+  transition: background 0.2s ease;
+}
+
+.posterTrigger:hover .playOverlay {
+  background: rgba(0, 0, 0, 0.38);
+}
+
+.showcaseControls {
+  margin-top: 0.6rem;
+  text-align: center;
+}
+
+.showcaseHint {
+  margin: 0.75rem 0 0;
+  font-size: 0.85rem;
+  color: rgba(48, 63, 49, 0.6);
+  text-align: center;
 }
 
 .videoPlayer {
