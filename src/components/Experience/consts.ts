@@ -5,26 +5,34 @@ export const SECTION_TITLE = 'Experience'
 export const EXPERIENCE: ExperienceEntry[] = [
   {
     id: 'e1',
-    role: 'Lead Frontend Engineer',
-    company: 'TechNova Systems',
-    period: '2022 — Present',
-    summary:
-      'Designing architecture for large-scale enterprise applications while mentoring frontend teams.',
+    role: 'Responsive Projects',
+    company: 'Junior Web Developer · Personal/Study Projects',
+    period: '2020-2022',
+    summary: `․Responsive webpages with HTML, CSS, JS
+
+․Marketing‑style landing pages
+
+․Cross‑browser compatibility improvements․`,
   },
   {
     id: 'e2',
-    role: 'UI Developer',
-    company: 'Creative Cloud',
+    role: 'Node.js & MongoDB',
+    company: 'Web Developer · Practice',
     period: '2020 — 2022',
-    summary:
-      'Transformed complex designs into pixel-perfect, accessible React components for production products.',
+    summary: `.Node.js backend setup.
+
+.MongoDB connection & CRUD operation.
+
+.API integration with frontend apps.`,
   },
   {
     id: 'e3',
-    role: 'Junior Web Developer',
-    company: 'Pixel Forge Studio',
-    period: '2018 — 2020',
-    summary:
-      'Built responsive marketing pages and internal tools, improving performance and browser compatibility.',
+    role: 'Advanced Frontend / Deployment',
+    company: 'Frontend Engineer · Portfolio/Google Play ',
+    period: '2025 — 2026',
+    summary: `.Responsive frontend with React & TypeScript.
+.Gemini API integration (axios).
+.Cordova app published on Google Play.
+.Workflow automation for medical forms.`,
   },
 ]

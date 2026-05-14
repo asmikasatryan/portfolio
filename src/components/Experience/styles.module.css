@@ -1,7 +1,7 @@
 .section {
   width: 100vw;
   margin-left: calc(50% - 50vw);
-  padding: 4.25rem clamp(1.35rem, 4vw, 4.8rem) var(--section-space);
+  padding: 4.25rem var(--section-pad-x) var(--section-space);
   /* background: #eceee7; */
 }
 
@@ -13,7 +13,7 @@
   font-weight: 700;
   line-height: 1.04;
   letter-spacing: -0.02em;
-  color: #243024;
+  color: #2a3a2c;
   text-align: center;
 }
 
@@ -33,17 +33,19 @@
   top: 0.4rem;
   bottom: 0.4rem;
   width: 1px;
-  background: rgba(53, 70, 43, 0.26);
+  background: rgba(72, 94, 72, 0.22);
 }
 
 .block {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
   padding: 1.4rem 1.4rem 1.3rem 2.8rem;
   border-radius: 1rem;
-  /* background: #f1f3ed; */
-  border: 1px solid rgba(53, 70, 43, 0.16);
-  box-shadow: 0 10px 26px rgba(36, 48, 36, 0.12);
-  background: linear-gradient(160deg, #95b385 0%, #76906b 100%);
+  border: 1px solid rgba(72, 94, 72, 0.14);
+  box-shadow: 0 10px 28px rgba(38, 56, 40, 0.1);
+  background: linear-gradient(160deg, #a0c492 0%, #829f78 100%);
 }
 
 .block::before {
@@ -54,37 +56,40 @@
   width: 0.9rem;
   height: 0.9rem;
   border-radius: 50%;
-  background: #79906b;
-  border: 2px solid rgba(245, 249, 236, 0.95);
+  background: #86a37a;
+  border: 2px solid rgba(252, 254, 248, 0.96);
 }
 
 .role {
-  margin: 0 0 0.35rem;
+  margin: 0;
   font-family: var(--font-sans);
-  font-size: clamp(1.25rem, 2vw, 1.8rem);
+  font-size: clamp(1.3rem, 2.1vw, 1.9rem);
   font-weight: 700;
-  color: #243224;
+  line-height: 1.25;
+  color: #2c3f2e;
 }
 
 .meta {
-  margin: 0 0 0.65rem;
+  margin: 0;
   font-family: var(--font-sans);
-  font-size: 0.92rem;
-  color: rgba(39, 52, 39, 0.72);
+  font-size: clamp(0.98rem, 1.35vw, 1.05rem);
+  line-height: 1.45;
+  color: rgba(40, 56, 42, 0.74);
 }
 
 .summary {
   margin: 0;
   font-family: var(--font-sans);
-  font-size: 1rem;
-  line-height: 1.55;
-  color: rgba(30, 41, 30, 0.84);
+  font-size: clamp(1.04rem, 1.65vw, 1.12rem);
+  line-height: 1.68;
+  color: rgba(32, 46, 34, 0.82);
+  white-space: pre-line;
 }
 
 @media (min-width: 640px) {
   .section {
-    padding-left: clamp(1.8rem, 4.6vw, 5.6rem);
-    padding-right: clamp(1.8rem, 4.6vw, 5.6rem);
+    padding-left: var(--section-pad-x-sm);
+    padding-right: var(--section-pad-x-sm);
   }
 }
 
@@ -121,6 +126,6 @@
 
 @media (min-width: 1280px) {
   .section {
-    padding-top: 4.8rem;
+    padding-top: var(--section-pad-top-lg);
   }
 }

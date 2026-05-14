@@ -2,15 +2,15 @@
   position: relative;
   width: 100vw;
   margin-left: calc(50% - 50vw);
-  padding: 5rem 1.5rem 3.25rem;
-  background: #f1f3ed;
+  padding: 5rem var(--section-pad-right-top) 3.25rem var(--section-pad-left-top);
+  background: var(--surface-page);
   overflow: hidden;
 }
 
 .row {
   position: relative;
   z-index: 1;
-  max-width: 1240px;
+  max-width: min(1920px, 100%);
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -28,15 +28,15 @@
   height: 30rem;
   border-radius: 50%;
   background: radial-gradient(circle,
-      rgba(141, 169, 120, 0.28) 0%,
-      rgba(141, 169, 120, 0.07) 58%,
+      rgba(168, 200, 145, 0.36) 0%,
+      rgba(168, 200, 145, 0.1) 58%,
       transparent 75%);
   filter: blur(10px);
 }
 
 .copy {
-  width: min(100%, 40rem);
-  max-width: 40rem;
+  width: min(100%, 46rem);
+  max-width: 46rem;
   min-width: 0;
 }
 
@@ -45,25 +45,27 @@
   align-items: center;
   justify-content: center;
   min-height: 1.8rem;
-  margin: 0 0 1.25rem;
+  margin: -0.35rem 0 1.25rem;
   padding: 0.3rem 0.95rem;
   border-radius: 999px;
-  background: rgba(217, 236, 201, 0.96);
-  color: #2f4630;
+  background: rgba(168, 202, 142, 0.92);
+  color: #1a331c;
   font-family: var(--font-sans);
   font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.09em;
+  transform: translateY(-0.35rem);
 }
 
 .wordmark {
-  margin: 0;
+  margin: -0.55rem 0 0;
   font-family: var(--font-sans);
   font-size: clamp(2.5rem, 8vw, 4.9rem);
   font-weight: 700;
   line-height: 1;
-  letter-spacing: -0.02em;
-  color: #4f6a46;
+  letter-spacing: 0.02em;
+  color: #0f0f0f;
+  transform: translateY(-0.45rem);
   /* color: rgba(88, 110, 79, 0.14); */
 }
 
@@ -71,19 +73,20 @@
   margin: 0.35rem 0 1rem;
   font-family: var(--font-sans);
   font-size: clamp(3rem, 10vw, 5.15rem);
-  font-weight: 500;
-  line-height: 0.96;
-  letter-spacing: -0.03em;
-  color: #4f6a46;
+  font-weight: 300;
+  line-height: 1.02;
+  letter-spacing: 0.04em;
+  color: rgba(72, 112, 68, 0.88);
 }
 
 .tagline {
   margin: 0 0 1.8rem;
   font-family: var(--font-sans);
   font-size: clamp(1rem, 2vw, 2rem);
-  line-height: 1.4;
-  color: rgba(35, 49, 35, 0.73);
-  max-width: 36rem;
+  line-height: 1.55;
+  letter-spacing: 0.015em;
+  color: rgba(38, 56, 40, 0.7);
+  max-width: 42rem;
 }
 
 .actions {
@@ -112,14 +115,14 @@
 
 .primaryAction {
   color: #ffffff;
-  background: linear-gradient(145deg, #88a477 0%, #6f8860 100%);
-  border: 1px solid rgba(111, 136, 96, 0.38);
+  background: linear-gradient(145deg, #96bc88 0%, #7da370 100%);
+  border: 1px solid rgba(120, 150, 108, 0.42);
 }
 
 .secondaryAction {
   color: #243524;
-  background: #f8faf5;
-  border: 1px solid rgba(76, 97, 67, 0.2);
+  background: var(--surface-frost);
+  border: 1px solid rgba(100, 128, 92, 0.22);
 }
 
 .primaryAction:hover,
@@ -130,7 +133,7 @@
 
 .visualWrap {
   position: relative;
-  width: min(100%, 30rem);
+  width: min(100%, 33rem);
   align-self: center;
 }
 
@@ -145,12 +148,12 @@
 
 @media (min-width: 640px) {
   .hero {
-    padding-left: 2rem;
-    padding-right: 2rem;
+    padding-left: var(--section-pad-left-sm-top);
+    padding-right: var(--section-pad-right-sm-top);
   }
 
   .visualWrap {
-    width: min(100%, 34rem);
+    width: min(100%, 37rem);
   }
 }
 
@@ -164,7 +167,7 @@
     flex-direction: row;
     align-items: center;
     width: 100%;
-    gap: clamp(3rem, 6vw, 6rem);
+    gap: clamp(3.25rem, 6.5vw, 6.75rem);
   }
 
   .copy {
@@ -174,14 +177,16 @@
 
   .wordmark {
     font-size: clamp(4.5rem, 9vw, 5.3rem);
+    letter-spacing: 0.025em;
   }
 
   .title {
     font-size: clamp(5rem, 11vw, 5.95rem);
+    letter-spacing: 0.045em;
   }
 
   .visualWrap {
-    width: clamp(36rem, 52vw, 45rem);
+    width: clamp(38rem, 54vw, 50rem);
     margin-left: auto;
     align-self: flex-start;
     flex: 0 1 48%;
@@ -192,8 +197,8 @@
 
 @media (min-width: 1280px) {
   .hero {
-    padding-left: 2.6rem;
-    padding-right: 2.6rem;
+    padding-left: var(--section-pad-left-sm-top);
+    padding-right: var(--section-pad-right-sm-top);
     min-height: 44rem;
   }
 
@@ -204,7 +209,9 @@
 
   .tagline {
     font-size: 2.7rem;
-    max-width: 40rem;
+    max-width: 44rem;
+    line-height: 1.52;
+    letter-spacing: 0.018em;
   }
 
   .primaryAction,
@@ -216,7 +223,7 @@
   }
 
   .visualWrap {
-    width: clamp(40rem, 56vw, 50rem);
+    width: clamp(43rem, 58vw, 55rem);
     transform: translateY(3rem);
   }
 }

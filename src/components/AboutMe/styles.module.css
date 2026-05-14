@@ -1,8 +1,8 @@
 .section {
   width: 100vw;
   margin-left: calc(50% - 50vw);
-  padding: 4.8rem clamp(1rem, 3vw, 3.5rem) var(--section-space);
-  background: #f1f3ed;
+  padding: 4.8rem var(--section-pad-x) var(--section-space);
+  background: var(--surface-page);
 }
 
 .layout {
@@ -32,7 +32,7 @@
   position: absolute;
   inset: 0;
   border-radius: 1.9rem;
-  background: #d6edbf;
+  background: #dff4d4;
   transform: rotate(-7deg);
   z-index: 0;
 }
@@ -108,6 +108,13 @@
   color: rgba(48, 63, 49, 0.72);
 }
 
+@media (min-width: 640px) {
+  .section {
+    padding-left: var(--section-pad-x-sm);
+    padding-right: var(--section-pad-x-sm);
+  }
+}
+
 @media (min-width: 900px) {
   .layout {
     flex-direction: row;
@@ -123,8 +130,8 @@
 @media (min-width: 1280px) {
   .section {
     padding-top: 5.1rem;
-    padding-left: clamp(1.5rem, 3.8vw, 4rem);
-    padding-right: clamp(1.5rem, 3.8vw, 4rem);
+    padding-left: var(--section-pad-x-sm);
+    padding-right: var(--section-pad-x-sm);
   }
 
   .layout {

@@ -5,7 +5,7 @@
 .geminiSection {
   width: 100vw;
   margin-left: calc(50% - 50vw);
-  padding: 2rem clamp(0.75rem, 2vw, 2rem) 1rem;
+  padding: 2rem var(--section-pad-x) 1rem;
 }
 
 .geminiGrid {
@@ -26,7 +26,7 @@
 
 .geminiCard {
   padding: 1.5rem;
-  border: 1px solid rgba(26, 46, 26, 0.1);
+  border: 1px solid rgba(72, 98, 74, 0.12);
   border-radius: 1rem;
   background: #ffffff;
 }
@@ -36,15 +36,15 @@
   min-height: 4.5rem;
   padding: 0.9rem 1rem;
   border-radius: 0.75rem;
-  border: 1px solid rgba(26, 46, 26, 0.14);
-  background: #f7faf7;
+  border: 1px solid rgba(72, 98, 74, 0.14);
+  background: var(--surface-frost);
 }
 
 .videoShowcase {
   width: 100vw;
   margin-left: calc(50% - 50vw);
-  padding: 3rem clamp(0.75rem, 2vw, 2rem) 2.5rem;
-  background: #eceee7;
+  padding: 3rem var(--section-pad-x) 2.5rem;
+  background: var(--surface-video);
 }
 
 .videoShowcaseInner {
@@ -57,7 +57,7 @@
   margin: 0 0 1.25rem;
   font-size: clamp(1.35rem, 2.5vw, 1.75rem);
   font-weight: 700;
-  color: rgba(34, 47, 36, 0.88);
+  color: rgba(36, 52, 38, 0.86);
 }
 
 .showcasePlayerWrap {
@@ -84,7 +84,7 @@
 }
 
 .posterTrigger:focus-visible {
-  outline: 2px solid rgba(26, 46, 26, 0.55);
+  outline: 2px solid rgba(84, 118, 86, 0.5);
   outline-offset: 3px;
 }
 
@@ -120,7 +120,7 @@
 .showcaseHint {
   margin: 0.75rem 0 0;
   font-size: 0.85rem;
-  color: rgba(48, 63, 49, 0.6);
+  color: rgba(50, 68, 52, 0.58);
   text-align: center;
 }
 
@@ -146,8 +146,8 @@
   min-height: 120px;
   padding: 0.9rem 1rem;
   border-radius: 0.75rem;
-  border: 1px solid rgba(26, 46, 26, 0.14);
-  background: #f7faf7;
+  border: 1px solid rgba(72, 98, 74, 0.14);
+  background: var(--surface-frost);
 }
 
 .clearButton {
@@ -164,7 +164,15 @@
 }
 
 .markdownContent :global(code) {
-  background: rgba(26, 46, 26, 0.08);
+  background: rgba(42, 72, 44, 0.09);
   padding: 0.1rem 0.3rem;
   border-radius: 0.25rem;
+}
+
+@media (min-width: 640px) {
+  .geminiSection,
+  .videoShowcase {
+    padding-left: var(--section-pad-x-sm);
+    padding-right: var(--section-pad-x-sm);
+  }
 }

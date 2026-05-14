@@ -1,17 +1,38 @@
 /* Design tokens — mobile portfolio (Figma reference) */
 :root {
-  --color-bg: #f9f9f7;
+  /* Softer, slightly brighter sage family (same hues, gentler surfaces) */
+  --color-bg: #fafcf8;
   --color-text: #1a2e1a;
-  --color-text-muted: #4a5c4a;
-  --color-accent: #2f4a32;
-  --color-sage: #9cb59c;
-  --color-sage-soft: #e8eee8;
-  --color-card: #f0f2ef;
+  --color-text-muted: #526b52;
+  --color-accent: #356238;
+  --color-sage: #a8c6a8;
+  --color-sage-soft: #ecf5ec;
+  --color-card: #f3f7f3;
+  --surface-page: #f3f7f2;
+  --surface-band: #edf4ea;
+  --surface-frost: #f8faf6;
+  --surface-input: #f1f6ef;
+  --surface-video: #eef5ee;
+  --sage-500: #8fb682;
+  --sage-600: #769a6a;
+  --sage-700: #5f7f56;
+  --sage-glow: rgba(158, 192, 132, 0.34);
+  --sage-glow-soft: rgba(168, 200, 145, 0.26);
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 16px;
-  --shadow-soft: 0 8px 24px rgba(26, 46, 26, 0.08);
+  --shadow-soft: 0 8px 24px rgba(34, 56, 38, 0.07);
   --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --section-space: 3.5rem;
+  /* Full-bleed sections: align horizontal padding across Hero → footer blocks */
+  --section-pad-x: clamp(1.35rem, 4vw, 4.8rem);
+  --section-pad-x-sm: clamp(1.8rem, 4.6vw, 5.6rem);
+  --section-pad-top: 4.25rem;
+  --section-pad-top-lg: 4.8rem;
+  /* Hero + Featured + Technical: asymmetric horizontal — slightly more inset on the left */
+  --section-pad-left-top: clamp(0.95rem, 2.05vw, 1.75rem);
+  --section-pad-right-top: clamp(0.6rem, 1.35vw, 1.1rem);
+  --section-pad-left-sm-top: clamp(1.25rem, 2.85vw, 2.6rem);
+  --section-pad-right-sm-top: clamp(0.9rem, 2.05vw, 1.95rem);
   --content-max: 420px;
 }
