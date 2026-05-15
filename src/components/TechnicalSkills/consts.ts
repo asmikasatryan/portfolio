@@ -12,18 +12,18 @@ export const SKILL_COLUMNS: SkillColumn[] = [
     id: 'frontend',
     title: 'Frontend',
     icon: 'frontend',
-    skills: ['React / Next.js', 'TypeScript', 'Tailwind CSS', 'Framer Motion'],
+    skills: ['JS / React.js', 'TypeScript', 'CSS/Flex ', 'HTML'],
   },
   {
     id: 'backend',
     title: 'Backend',
     icon: 'backend',
-    skills: ['Node.js / Express', 'PostgreSQL / Supabase', 'REST & GraphQL', 'Firebase'],
+    skills: ['Node.js / Express', 'PostgreSQL', 'MongoDB'],
   },
   {
     id: 'tools',
     title: 'Tools',
     icon: 'tools',
-    skills: ['Git / GitHub', 'Docker', 'Figma', 'Vercel / AWS'],
+    skills: ['Git / GitHub', 'Docker', 'Figma', 'Vercel'],
   },
 ]

@@ -53,14 +53,31 @@
   min-width: 0;
 }
 
+.headingRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.85rem 1rem;
+  margin-bottom: 1.2rem;
+}
+
 .heading {
-  margin: 0 0 1.2rem;
+  margin: 0;
+  flex: 1 1 12rem;
+  min-width: 0;
   font-family: var(--font-sans);
   font-size: clamp(2.2rem, 4.8vw, 4rem);
   font-weight: 700;
   line-height: 1.05;
   letter-spacing: -0.02em;
   color: rgba(34, 47, 36, 0.84);
+}
+
+.ttsButton {
+  flex-shrink: 0;
+  align-self: center;
+  font-weight: 600;
 }
 
 .body {
@@ -70,6 +87,10 @@
   line-height: 1.48;
   color: rgba(41, 56, 43, 0.78);
   max-width: none;
+}
+
+.headingRow + .body {
+  margin-top: 0;
 }
 
 .body:last-of-type {

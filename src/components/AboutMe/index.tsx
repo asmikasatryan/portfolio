@@ -1,7 +1,77 @@
-import { ABOUT_PARAGRAPHS, ABOUT_STATS, SECTION_TITLE } from './consts'
+import { Button, message } from 'antd'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { speakBrowserText, stopBrowserSpeech } from '../../services/browserSpeechTts'
+import {
+  ABOUT_PARAGRAPHS,
+  ABOUT_STATS,
+  getAboutSpeechScript,
+  SECTION_TITLE,
+} from './consts'
 import styles from './styles.module.css'
 
+type TtsPhase = 'idle' | 'loading' | 'playing'
+
 export function AboutMe() {
+  const [ttsPhase, setTtsPhase] = useState<TtsPhase>('idle')
+  const abortRef = useRef<AbortController | null>(null)
+  /** Prevents overlapping "Listen" runs before React state catches up to `loading`. */
+  const listenInFlightRef = useRef(false)
+
+  const stopPlayback = useCallback(() => {
+    listenInFlightRef.current = false
+    abortRef.current?.abort()
+    abortRef.current = null
+    stopBrowserSpeech()
+    setTtsPhase('idle')
+  }, [])
+
+  useEffect(() => {
+    return () => {
+      abortRef.current?.abort()
+      stopBrowserSpeech()
+    }
+  }, [])
+
+  const handleListenToggle = useCallback(async () => {
+    if (ttsPhase === 'playing' || ttsPhase === 'loading') {
+      stopPlayback()
+      return
+    }
+
+    if (listenInFlightRef.current) {
+      return
+    }
+    listenInFlightRef.current = true
+
+    const script = getAboutSpeechScript()
+    const ac = new AbortController()
+    abortRef.current = ac
+    setTtsPhase('loading')
+
+    try {
+      await speakBrowserText(script, {
+        signal: ac.signal,
+        onStart: () => setTtsPhase('playing'),
+      })
+      if (!ac.signal.aborted) {
+        setTtsPhase('idle')
+      }
+    } catch (err) {
+      if ((err as Error).name === 'AbortError') return
+      const text = err instanceof Error ? err.message : 'Speech failed.'
+      message.error(text)
+      setTtsPhase('idle')
+    } finally {
+      listenInFlightRef.current = false
+      if (abortRef.current === ac) {
+        abortRef.current = null
+      }
+    }
+  }, [stopPlayback, ttsPhase])
+
+  const listenLabel =
+    ttsPhase === 'loading' ? 'Preparing…' : ttsPhase === 'playing' ? 'Stop' : 'Listen'
+
   return (
     <section
       id="about"
@@ -17,9 +87,20 @@ export function AboutMe() {
           />
         </div>
         <div className={styles.copy}>
-          <h2 id="about-heading" className={styles.heading}>
-            {SECTION_TITLE}
-          </h2>
+          <div className={styles.headingRow}>
+            <h2 id="about-heading" className={styles.heading}>
+              {SECTION_TITLE}
+            </h2>
+            <Button
+              type="default"
+              className={styles.ttsButton}
+              loading={ttsPhase === 'loading'}
+              onClick={handleListenToggle}
+              aria-pressed={ttsPhase === 'playing' || ttsPhase === 'loading'}
+            >
+              {listenLabel}
+            </Button>
+          </div>
           {ABOUT_PARAGRAPHS.map((paragraph) => (
             <p key={paragraph} className={styles.body}>
               {paragraph}

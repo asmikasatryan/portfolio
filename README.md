@@ -13,7 +13,7 @@ Frontend portfolio built with **React**, **TypeScript**, **Vite**, **pnpm**, and
 
 1. **Link the GitHub repo** in the Vercel dashboard (Import → `asmikasatryan/portfolio`), and set the **Production Branch** to `main`.
 2. After each `git push` to `main`, open **Deployments** and confirm a new build for the latest commit SHA (not an old one).
-3. **Environment variables** (Settings → Environment Variables): add `VITE_GEMINI_API_KEY` and `VITE_DID_API_KEY`, then **Redeploy** so Vite embeds them at build time. The `.env` file is not committed.
+3. **Environment variables** (Settings → Environment Variables): add `VITE_GEMINI_API_KEY` and `VITE_DID_API_KEY`, then **Redeploy** so Vite embeds them at build time. The `.env` file is not committed. **About the Maker → Listen** uses the browser’s built-in speech (no extra env vars).
 4. If the UI still looks old, hard-refresh the site (Ctrl+Shift+R) or open it in a private window.
 
 ---

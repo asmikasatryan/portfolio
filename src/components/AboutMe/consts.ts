@@ -9,3 +9,8 @@ export const ABOUT_STATS = [
   { value: '120+', label: 'Projects Shipped' },
   { value: '50+', label: 'Happy Clients' },
 ] as const
+
+/** Full script for About the Maker listen (body only). */
+export function getAboutSpeechScript(): string {
+  return ABOUT_PARAGRAPHS.join(' ')
+}
