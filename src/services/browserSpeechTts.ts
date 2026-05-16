@@ -5,7 +5,6 @@ function assertSpeechSynthesis(): SpeechSynthesis {
   return window.speechSynthesis
 }
 
-/** Known female voice name fragments (browser/OS dependent). */
 const FEMALE_VOICE_HINTS = [
   'female',
   'woman',
@@ -33,7 +32,6 @@ const FEMALE_VOICE_HINTS = [
   'sara',
 ] as const
 
-/** Known male voice name fragments — deprioritized when picking. */
 const MALE_VOICE_HINTS = [
   ' male',
   'male ',
@@ -75,7 +73,6 @@ function pickPreferredVoice(candidates: SpeechSynthesisVoice[]): SpeechSynthesis
   )
 }
 
-/** Prefer English (US) female voices; fall back to any English, then system default. */
 function pickEnglishFemaleVoice(voices: SpeechSynthesisVoice[]): SpeechSynthesisVoice | undefined {
   const en = voices.filter((v) => v.lang.toLowerCase().startsWith('en'))
   if (!en.length) return voices[0]
@@ -120,7 +117,6 @@ export type SpeakBrowserOptions = {
   onStart?: () => void
 }
 
-/** Speak plain text with the browser Web Speech API (no API key). */
 export function speakBrowserText(
   plainText: string,
   options?: SpeakBrowserOptions,
@@ -153,6 +149,7 @@ export function speakBrowserText(
         } else {
           utterance.lang = 'en-US'
         }
+        utterance.rate = 0.88
 
         const cleanup = () => {
           signal?.removeEventListener('abort', onAbort)

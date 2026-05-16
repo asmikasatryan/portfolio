@@ -10,7 +10,12 @@ export const ABOUT_STATS = [
   { value: '50+', label: 'Happy Clients' },
 ] as const
 
-/** Full script for About the Maker listen (body only). */
+/** Paragraphs for Azure Speech SSML (pauses between blocks). */
+export function getAboutSpeechParagraphs(): readonly string[] {
+  return ABOUT_PARAGRAPHS
+}
+
+/** Plain text for browser speech synthesis. */
 export function getAboutSpeechScript(): string {
   return ABOUT_PARAGRAPHS.join(' ')
 }

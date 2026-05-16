@@ -7,6 +7,7 @@ export const NAV_LINKS = [
   { id: 'about', href: '#about', label: 'About' },
   { id: 'gemini', href: '#gemini', label: 'Gemini' },
   { id: 'video', href: '#video', label: 'Video' },
+  { id: 'video-storage', href: '#video-storage', label: 'Storage' },
 ] as const
 
 export const MOBILE_LINKS = [

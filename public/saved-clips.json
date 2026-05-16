@@ -1,0 +1,10 @@
+[
+  {
+    "id": "d10eea47-8236-4c62-ad6d-29266f901be8",
+    "videoUrl": "https://d-id-talks-prod.s3.us-west-2.amazonaws.com/google-oauth2%7C107167214238076942628/tlk_yEW9ubw0q8jI5YoqNjU0g/1778914685874.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIA5CUMPJBIK65W6FGA%2F20260516%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260516T065812Z&X-Amz-Expires=86400&X-Amz-Signature=27b7b7824104fbedaddf62038c8efbd6f74c277ee4c0798958be0b992e171aab&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject",
+    "posterUrl": "https://portfolio-fawn-three-56.vercel.app/1149de5674f43bdd39aae15d3c8370ed36dfd05e37cd8975c60bd0a3c63e903f.png",
+    "scriptUsed": "Welcome to my AI video generation demo.",
+    "createdAt": 1778914640220,
+    "builtIn": false
+  }
+]

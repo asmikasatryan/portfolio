@@ -2,6 +2,20 @@ import axios from 'axios'
 
 const DID_BASE_URL = 'https://api.d-id.com'
 
+/** Microsoft neural voice via D-ID TTS (no Azure Speech key required). */
+export const DID_MICROSOFT_VOICE_ID = 'en-US-AvaMultilingualNeural'
+
+export function buildMicrosoftTalkScript(input: string): TalkScript {
+  return {
+    type: 'text',
+    input: input.trim(),
+    provider: {
+      type: 'microsoft',
+      voice_id: DID_MICROSOFT_VOICE_ID,
+    },
+  }
+}
+
 export type TalkScript = {
   type: 'text'
   input: string
