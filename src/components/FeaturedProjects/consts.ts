@@ -18,6 +18,7 @@ export const FEATURED_PROJECTS: FeaturedProject[] = [
       'GitHub + Vercel Deployment',
     ],
     ctaLabel: 'Case Study',
+    collageSrc: '/Screenshot_2026-05-17-23-14-07-331_com.mi.globalbrowser.jpg',
   },
   {
     id: 'p2',

@@ -45,7 +45,7 @@ export function FeaturedProjects() {
                   <img
                     className={styles.thumbImage}
                     src={project.collageSrc}
-                    alt={`${project.title} app icon`}
+                    alt={`${project.title} preview`}
                   />
                 </div>
               ) : (
