@@ -9,27 +9,40 @@ import {
 const LEGACY_CLIP_STORAGE_KEY = 'home:generatedVideo'
 const LEGACY_CLIPS_STORAGE_KEY = 'home:generatedClips'
 
+function isJsonClipsPayload(data: unknown): data is { clips?: unknown } | unknown[] {
+  if (Array.isArray(data)) {
+    return true
+  }
+  return typeof data === 'object' && data !== null && 'clips' in data
+}
+
+async function fetchSavedClipsFile(signal?: AbortSignal): Promise<SavedClip[]> {
+  const { data } = await axios.get<unknown>('/saved-clips.json', {
+    signal,
+    params: { t: Date.now() },
+  })
+  return ensureAllClips(normalizeClipList(data))
+}
+
 export async function fetchSharedClips(signal?: AbortSignal): Promise<SavedClip[]> {
   try {
-    const { data } = await axios.get<unknown>('/api/clips', {
+    const { data, headers } = await axios.get<unknown>('/api/clips', {
       signal,
       headers: { 'Cache-Control': 'no-store' },
     })
-    if (Array.isArray(data)) {
-      return ensureAllClips(normalizeClipList(data))
+    const contentType = String(headers['content-type'] ?? '')
+    if (contentType.includes('application/json') && isJsonClipsPayload(data)) {
+      const clips = Array.isArray(data) ? data : (data as { clips?: unknown }).clips
+      return ensureAllClips(normalizeClipList(clips))
     }
-    const clips = (data as { clips?: unknown })?.clips
-    return ensureAllClips(normalizeClipList(clips))
   } catch {
-    try {
-      const { data } = await axios.get<unknown>('/saved-clips.json', {
-        signal,
-        params: { t: Date.now() },
-      })
-      return ensureAllClips(normalizeClipList(data))
-    } catch {
-      return ensureAllClips([])
-    }
+    /* use saved-clips.json fallback */
+  }
+
+  try {
+    return await fetchSavedClipsFile(signal)
+  } catch {
+    return ensureAllClips([])
   }
 }
 
