@@ -4,4 +4,6 @@ export type FeaturedProject = {
   description: string
   tags: string[]
   ctaLabel: string
+  /** Optional image shown directly above this project card */
+  collageSrc?: string
 }

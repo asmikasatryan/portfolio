@@ -116,6 +116,11 @@
   pointer-events: none;
 }
 
+.body strong {
+  font-weight: 700;
+  color: rgba(34, 47, 36, 0.9);
+}
+
 .body {
   margin: 0 0 1rem;
   font-family: var(--font-sans);

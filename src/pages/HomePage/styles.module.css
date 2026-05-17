@@ -184,6 +184,18 @@
   font-size: 0.78rem !important;
 }
 
+.clipLoadError {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 12rem;
+  padding: 1rem;
+  border-radius: 0.6rem;
+  border: 1px dashed rgba(200, 80, 60, 0.45);
+  background: rgba(255, 248, 246, 0.9);
+  text-align: center;
+}
+
 .clipRemove {
   padding-inline: 0 !important;
   margin-top: 0.15rem;

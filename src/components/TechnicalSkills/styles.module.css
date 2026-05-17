@@ -1,11 +1,9 @@
 .section {
   width: 100vw;
   margin-left: calc(50% - 50vw);
-  padding: var(--section-pad-top) var(--section-pad-right-top) var(--section-space)
-    var(--section-pad-left-top);
-  background: radial-gradient(circle at 38% 22%, rgba(200, 226, 168, 0.48), transparent 38%),
-  radial-gradient(circle at 72% 30%, rgba(168, 198, 142, 0.34), transparent 32%),
-  linear-gradient(180deg, #fafcf7 0%, #f1f6ec 50%, #eaf3e4 100%);
+  box-sizing: border-box;
+  padding: var(--section-pad-top) var(--section-pad-x) var(--section-space);
+  background: var(--surface-video);
 }
 
 .heading {
@@ -94,11 +92,6 @@
   .columns {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-
-  .section {
-    padding-left: var(--section-pad-left-sm-top);
-    padding-right: var(--section-pad-right-sm-top);
-  }
 }
 
 @media (min-width: 900px) {
@@ -111,7 +104,5 @@
 @media (min-width: 1280px) {
   .section {
     padding-top: var(--section-pad-top-lg);
-    padding-left: var(--section-pad-left-sm-top);
-    padding-right: var(--section-pad-right-sm-top);
   }
 }

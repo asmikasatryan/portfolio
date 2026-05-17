@@ -2,16 +2,21 @@ import type { FeaturedProject } from './types'
 
 export const SECTION_TITLE = 'Selected Works'
 export const SECTION_SUBTITLE =
-  'A curated gallery of projects focusing on motion, performance, and user-centric design.'
+  'A collection of projects, including a published Cordova mobile app on Google Play — driving digital healthcare transformation with Android Studio and AI.'
 export const SECTION_FILTERS = ['React', 'TypeScript', 'Tailwind']
 
 export const FEATURED_PROJECTS: FeaturedProject[] = [
   {
     id: 'p1',
-    title: 'Lumina Dashboard',
+    title: 'Portfolio – DevMed Studio',
     description:
-      'High-performance analytics platform for SaaS teams, focusing on real-time data visualization.',
-    tags: ['React', 'D3.js', 'GraphQL'],
+      'Includes video generation demos, GitHub MSP setup, and Vercel deployment for live portfolio hosting.',
+    tags: [
+      'React/Vite',
+      'Gemini API (axios)',
+      'Video Generation',
+      'GitHub + Vercel Deployment',
+    ],
     ctaLabel: 'Case Study',
   },
   {
@@ -24,10 +29,11 @@ export const FEATURED_PROJECTS: FeaturedProject[] = [
   },
   {
     id: 'p3',
-    title: 'Bloom Health',
+    title: 'Manage Weight',
     description:
-      'A wellness application designed to simplify holistic habit tracking through micro-interactions.',
-    tags: ['React Native', 'Firebase', 'Expo'],
+      'A mobile application published on Google Play, designed to calculate BMI, track healthy weight ranges, and provide multilingual guidance for digital healthcare.',
+    tags: ['Cordova', 'Android Studio', 'AdMob'],
     ctaLabel: 'Case Study',
+    collageSrc: '/20260517_210122-COLLAGE.jpg',
   },
 ]

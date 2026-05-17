@@ -1,4 +1,4 @@
-import { Button, message, Typography } from 'antd'
+import { Button, message } from 'antd'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import {
   isAzureSpeechConfigured,
@@ -6,6 +6,7 @@ import {
   synthesizeAzureSpeechMp3,
 } from '../../services/azureSpeechTts'
 import { speakBrowserText, stopBrowserSpeech } from '../../services/browserSpeechTts'
+import { HEADER_AVATAR_SRC } from '../SiteHeader/consts'
 import {
   ABOUT_PARAGRAPHS,
   ABOUT_STATS,
@@ -15,10 +16,23 @@ import {
 } from './consts'
 import styles from './styles.module.css'
 
-const { Text } = Typography
-
 type TtsPhase = 'idle' | 'loading' | 'playing'
-type ListenEngine = 'azure' | 'browser' | null
+
+function renderAboutParagraph(paragraph: string, paragraphIndex: number) {
+  if (paragraphIndex !== 0) {
+    return paragraph
+  }
+  const commaIndex = paragraph.indexOf(',')
+  if (commaIndex === -1) {
+    return paragraph
+  }
+  return (
+    <>
+      <strong>{paragraph.slice(0, commaIndex + 1)}</strong>
+      {paragraph.slice(commaIndex + 1)}
+    </>
+  )
+}
 
 export function AboutMe() {
   const clientAzureOk = isAzureSpeechConfigured()
@@ -34,7 +48,6 @@ export function AboutMe() {
   }, [])
 
   const [ttsPhase, setTtsPhase] = useState<TtsPhase>('idle')
-  const [lastEngine, setLastEngine] = useState<ListenEngine>(null)
   const audioRef = useRef<HTMLAudioElement | null>(null)
   const objectUrlRef = useRef<string | null>(null)
   const abortRef = useRef<AbortController | null>(null)
@@ -103,7 +116,6 @@ export function AboutMe() {
       }
 
       await audio.play()
-      setLastEngine('azure')
       setTtsPhase('playing')
     },
     [revokeAudioUrl, stopPlayback],
@@ -137,7 +149,6 @@ export function AboutMe() {
       await speakBrowserText(getAboutSpeechScript(), {
         signal: ac.signal,
         onStart: () => {
-          setLastEngine('browser')
           setTtsPhase('playing')
         },
       })
@@ -160,28 +171,6 @@ export function AboutMe() {
   const listenLabel =
     ttsPhase === 'loading' ? 'Preparing…' : ttsPhase === 'playing' ? 'Stop' : 'Listen'
 
-  const voiceHint =
-    lastEngine === 'azure' ? (
-      <>
-        Last played: <strong>Microsoft Azure</strong> — <strong>Ava</strong> multilingual.
-      </>
-    ) : lastEngine === 'browser' ? (
-      <>
-        Last played: <strong>browser voice</strong> (Windows/Chrome). Azure is tried first when
-        configured.
-      </>
-    ) : azureAvailable ? (
-      <>
-        Tries <strong>Azure Ava</strong> first; falls back to <strong>browser voice</strong> if
-        Azure fails.
-      </>
-    ) : (
-      <>
-        Uses <strong>browser voice</strong>. Add{' '}
-        <code className={styles.envCode}>VITE_AZURE_SPEECH_KEY</code> for Azure Ava.
-      </>
-    )
-
   return (
     <section
       id="about"
@@ -193,7 +182,7 @@ export function AboutMe() {
         <div className={styles.portraitFrame}>
           <img
             className={styles.portrait}
-            src="/1149de5674f43bdd39aae15d3c8370ed36dfd05e37cd8975c60bd0a3c63e903f.png"
+            src={HEADER_AVATAR_SRC}
             alt="Portrait of the maker"
           />
         </div>
@@ -212,14 +201,11 @@ export function AboutMe() {
               >
                 {listenLabel}
               </Button>
-              <Text type="secondary" className={styles.voiceHint}>
-                {voiceHint}
-              </Text>
             </div>
           </div>
-          {ABOUT_PARAGRAPHS.map((paragraph) => (
+          {ABOUT_PARAGRAPHS.map((paragraph, index) => (
             <p key={paragraph} className={styles.body}>
-              {paragraph}
+              {renderAboutParagraph(paragraph, index)}
             </p>
           ))}
           <ul className={styles.stats} aria-label="Maker achievements">

@@ -24,8 +24,11 @@ export function getPublicSiteOrigin(): string {
   return FALLBACK_PUBLIC_SITE
 }
 
-/** Absolute avatar URL that D-ID can fetch (never localhost in dev). */
+/** Absolute avatar URL that D-ID can fetch (public https, never localhost). */
 export function getPortfolioAvatarSourceUrl(): string {
+  if (HEADER_AVATAR_SRC.startsWith('http://') || HEADER_AVATAR_SRC.startsWith('https://')) {
+    return HEADER_AVATAR_SRC
+  }
   const base = getPublicSiteOrigin()
   return new URL(HEADER_AVATAR_SRC, `${base}/`).href
 }

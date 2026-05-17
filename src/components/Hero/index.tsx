@@ -37,7 +37,11 @@ export function Hero() {
           </div>
         </div>
         <div className={styles.visualWrap} aria-hidden>
-          <img className={styles.visual} src={HERO_SIDE_IMAGE} alt="" />
+          <img
+            className={styles.visual}
+            src={HERO_SIDE_IMAGE}
+            alt="Minimalist creative developer workspace"
+          />
         </div>
       </div>
     </section>

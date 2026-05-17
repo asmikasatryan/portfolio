@@ -1,10 +1,8 @@
-import containerImage from '../../assets/Container.png'
-
 export const AVAILABILITY_BADGE = 'AVAILABLE FOR FREELANCE'
 export const HERO_WORDMARK = 'Frontend'
 export const HERO_TITLE = 'Developer'
 export const HERO_TAGLINE =
-  'Crafting digital experiences where aesthetic intentionality meets engineering precision. Specializing in high-performance React architectures.'
+  'I create digital experiences where medical expertise meets engineering precision. Advancing digital healthcare experiences through AI and technology.'
 
 export const PRIMARY_CTA = {
   href: '#projects',
@@ -22,4 +20,5 @@ export const EXPERIENCE_CARD = {
   description: 'In Creative Engineering',
 }
 
-export const HERO_SIDE_IMAGE = containerImage
+export const HERO_SIDE_IMAGE =
+  '/a_high_end_minimalist_workspace_for_a_creative_developer_based_on_the_previous.png'

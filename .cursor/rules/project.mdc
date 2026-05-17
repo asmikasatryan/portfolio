@@ -19,6 +19,18 @@ alwaysApply: true
   - **Option B (no admin):** `npx pnpm@10.33.0 install` and same pattern for other commands (or any matching `packageManager` version).
 - `npm run dev` / `npm run build` still work because they call the same scripts; for lockfile consistency, install dependencies with pnpm when possible.
 
+## D-ID video (dev note for agents only)
+
+- On **localhost**, D-ID requires a **public** `source_url` (https, ending in `.jpg`/`.jpeg`/`.png`); it cannot fetch `localhost`.
+- Dev default avatar URL comes from `getPortfolioAvatarSourceUrl()` in `src/lib/portfolioAssets.ts` (production site, e.g. `https://portfolio-fawn-three-56.vercel.app`, or imgbb via `HEADER_AVATAR_SRC`).
+- **Do not** add UI copy on the portfolio explaining localhost vs production for D-ID; keep that context in Cursor rules only. Validation errors from the form/API may still surface briefly when the user submits a bad URL.
+
+## About the Maker (user-authored copy)
+
+- `src/components/AboutMe/consts.ts` is **hand-edited by the user** (`SECTION_TITLE`, `ABOUT_PARAGRAPHS`, `ABOUT_STATS`).
+- **Do not change, revert, or “improve”** that copy unless the user explicitly asks.
+- Keep About body text only in `consts.ts`; `AboutMe/index.tsx` imports it (no duplicate hardcoded paragraphs).
+
 ## Edits
 
 - Match existing patterns (Ant Design layout, functional components, TypeScript types).

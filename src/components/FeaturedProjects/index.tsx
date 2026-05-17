@@ -35,27 +35,41 @@ export function FeaturedProjects() {
         {FEATURED_PROJECTS.map((project, index) => {
           const toneClass = THUMB_TONES[index % THUMB_TONES.length]
           return (
-            <article key={project.id} className={styles.card} aria-label={project.title}>
-              <div
-                className={`${styles.thumb} ${toneClass}`}
-                role="img"
-                aria-hidden
-              />
+            <article
+              key={project.id}
+              className={`${styles.card} ${project.collageSrc ? styles.cardWithCollage : ''}`}
+              aria-label={project.title}
+            >
+              {project.collageSrc ? (
+                <div className={styles.thumbImageFrame}>
+                  <img
+                    className={styles.thumbImage}
+                    src={project.collageSrc}
+                    alt={`${project.title} app icon`}
+                  />
+                </div>
+              ) : (
+                <div
+                  className={`${styles.thumb} ${toneClass}`}
+                  role="img"
+                  aria-hidden
+                />
+              )}
               <div className={styles.meta}>
-                <h3 className={styles.title}>{project.title}</h3>
-                <p className={styles.description}>{project.description}</p>
-                <ul className={styles.tags} aria-label={`${project.title} technologies`}>
-                  {project.tags.map((tag) => (
-                    <li key={tag} className={styles.tag}>
-                      {tag}
-                    </li>
-                  ))}
-                </ul>
-                <a className={styles.link} href="#contact">
-                  {project.ctaLabel}
-                  <ArrowRightOutlined className={styles.linkIcon} aria-hidden />
-                </a>
-              </div>
+                  <h3 className={styles.title}>{project.title}</h3>
+                  <p className={styles.description}>{project.description}</p>
+                  <ul className={styles.tags} aria-label={`${project.title} technologies`}>
+                    {project.tags.map((tag) => (
+                      <li key={tag} className={styles.tag}>
+                        {tag}
+                      </li>
+                    ))}
+                  </ul>
+                  <a className={styles.link} href="#contact">
+                    {project.ctaLabel}
+                    <ArrowRightOutlined className={styles.linkIcon} aria-hidden />
+                  </a>
+                </div>
             </article>
           )
         })}

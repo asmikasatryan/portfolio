@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import axios from 'axios'
 import { DatabaseOutlined, PlayCircleOutlined } from '@ant-design/icons'
 import { Button, Form, Input, Typography } from 'antd'
@@ -12,7 +12,6 @@ import { SiteFooter } from '../../components/SiteFooter'
 import { TechnicalSkills } from '../../components/TechnicalSkills'
 import {
   getPortfolioAvatarSourceUrl,
-  getPublicSiteOrigin,
   isLocalDevOrigin,
   isLocalhostSourceUrl,
   validateDidSourceUrl,
@@ -33,7 +32,6 @@ import { askGemini } from '../../services/geminiApi'
 import {
   buildMicrosoftTalkScript,
   createTalk,
-  DID_MICROSOFT_VOICE_ID,
   pollTalkUntilTerminal,
   type Talk,
 } from '../../services/didApi'
@@ -53,28 +51,40 @@ type ClipCardProps = {
 }
 
 function ClipCard({ clip, videoNumber }: ClipCardProps) {
+  const videoRef = useRef<HTMLVideoElement>(null)
   const [playing, setPlaying] = useState(clip.builtIn === true)
+  const startPlayback = () => {
+    setPlaying(true)
+    requestAnimationFrame(() => {
+      const video = videoRef.current
+      if (!video) return
+      video.muted = false
+      video.volume = 1
+      void video.play().catch(() => {
+        /* user may need to press play again in controls */
+      })
+    })
+  }
 
   return (
     <article className={styles.clipCard}>
       <div className={styles.clipCardPlayer}>
         {playing || clip.builtIn ? (
           <video
+            ref={videoRef}
             className={styles.videoPlayer}
             src={clip.videoUrl}
             poster={clip.posterUrl || HEADER_AVATAR_SRC}
             controls
             playsInline
             preload="metadata"
-            autoPlay={playing && !clip.builtIn}
+            autoPlay={clip.builtIn}
           />
         ) : (
           <button
             type="button"
             className={styles.posterTrigger}
-            onClick={() => {
-              setPlaying(true)
-            }}
+            onClick={startPlayback}
             aria-label={`Play Video ${videoNumber}`}
           >
             <img
@@ -293,19 +303,6 @@ export function HomePage() {
         <div className={styles.geminiGrid}>
           <div id="video" className={styles.geminiCard}>
             <Title level={3}>Generate Video</Title>
-            <Paragraph type="secondary" className={styles.geminiIntro}>
-              Powered by D-ID (<code>VITE_DID_API_KEY</code>). Voice: Microsoft{' '}
-              <strong>Ava</strong> multilingual (<code>{DID_MICROSOFT_VOICE_ID}</code>).
-              Source image defaults to your <strong>portfolio avatar</strong>. New clips
-              are saved in <strong>{CLIPS_SECTION_TITLE}</strong> below.
-            </Paragraph>
-            {isLocalDevOrigin() ? (
-              <Paragraph type="secondary" className={styles.sourceHint}>
-                On <code>localhost</code>, D-ID needs a <strong>public</strong> image URL.
-                Default below uses your live site:{' '}
-                <code className={styles.sourceHintCode}>{getPublicSiteOrigin()}</code>
-              </Paragraph>
-            ) : null}
             <Form layout="vertical" onFinish={handleGenerateVideo}>
               <Form.Item label="Source Image URL (portfolio avatar)">
                 <div className={styles.sourceRow}>
@@ -425,10 +422,6 @@ export function HomePage() {
           <h2 id="video-storage-heading" className={styles.videoShowcaseTitle}>
             {CLIPS_SECTION_TITLE}
           </h2>
-          <p className={styles.showcaseHint}>
-            Shared visible storage — every saved video stays on display for all visitors.
-          </p>
-
           <div className={styles.storagePanel} aria-label="Visible video storage">
             <div className={styles.storageHeader}>
               <span className={styles.storageIcon} aria-hidden>

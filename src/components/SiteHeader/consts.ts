@@ -1,4 +1,4 @@
-export const BRAND_LABEL = 'Atelier.Dev'
+export const BRAND_LABEL = 'Portfolio – DevMed Studio'
 
 export const NAV_LINKS = [
   { id: 'projects', href: '#projects', label: 'Work' },
@@ -17,6 +17,6 @@ export const MOBILE_LINKS = [
 
 export const DEFAULT_ACTIVE_LINK_ID = 'projects'
 
-/** Public portrait shown in the header (same asset as About Me). */
+/** Portrait in header, About Me, and D-ID (public imgbb URL — light-green background). */
 export const HEADER_AVATAR_SRC =
-  '/1149de5674f43bdd39aae15d3c8370ed36dfd05e37cd8975c60bd0a3c63e903f.png'
+  'https://i.ibb.co/HJTCXGM/c3ffc6e0ef7a7762d8d436a2a06040d122afba4de671cbf77c1dad1b47e7eb3f.jpg'
